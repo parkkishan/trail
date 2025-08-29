@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+#analytics {
+  margin-left: -100px;
+}
+#add-application-button{
+    background: none;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-color: rgb(150, 150, 150);
+}
+
+#toggle-button {
+    background: none;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-color: rgb(150, 150, 150);
+}
+#close-button{
+    background: none;
+    margin-top: 50px;
+    margin-right: 20px;
+    border-color: rgb(150, 150, 150);
+}
+
+#sidebaritems{
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #727272;
+    border-radius: 0;
+    padding: 20px;
+
+}
