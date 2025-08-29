@@ -69,7 +69,7 @@ const JobTracker = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editMode && selectedApp) {
-      setApplications(prev => prev.map(app => 
+      setApplications(prev => prev.map(app =>
         app.id === selectedApp.id ? { ...formData, id: selectedApp.id } : app
       ));
       setEditMode(false);
@@ -112,7 +112,7 @@ const JobTracker = () => {
 
   const filteredApplications = applications.filter(app => {
     const matchesSearch = app.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         app.position.toLowerCase().includes(searchTerm.toLowerCase());
+      app.position.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterStatus === 'all' || app.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
@@ -130,16 +130,16 @@ const JobTracker = () => {
   const getChartData = () => {
     const last7Days = [];
     const today = new Date();
-    
+
     for (let i = 6; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
       const dateStr = date.toISOString().split('T')[0];
-      
-      const count = applications.filter(app => 
+
+      const count = applications.filter(app =>
         app.applicationDate === dateStr
       ).length;
-      
+
       last7Days.push({
         date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         applications: count
@@ -161,11 +161,11 @@ const JobTracker = () => {
   const stats = getStats();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-gray-900 to-purple-800">
+    <div className="min-h-screen min-w-screen bg-gradient-to-br from-purple-900 via-gray-900 to-purple-800">
       <div className="flex relative">
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/50 glass-effect z-40 lg:hidden animate-fadeIn"
             onClick={() => setSidebarOpen(false)}
           />
@@ -173,23 +173,23 @@ const JobTracker = () => {
 
         {/* Enhanced Responsive Sidebar */}
         <div className={`
-          fixed lg:relative inset-y-0 left-0 z-50
-          w-[280px] xs:w-[320px] sm:w-80 lg:w-72 glass-effect border-r border-purple-500/20 
-          transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-          lg:translate-x-0 transition-all duration-300
-          h-[100dvh] lg:min-h-screen overflow-y-auto
-          flex flex-col
-        `}>
+  fixed lg:relative inset-y-0 left-0 z-50
+  w-[280px] xs:w-[320px] sm:w-80 lg:w-72 bg-gray-900 border-r bg-purple-960 border-purple-900/90 
+  transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+  lg:translate-x-0 transition-all duration-300
+  h-[100dvh] lg:min-h-screen overflow-y-auto
+  flex flex-col
+`}>
           <div className="flex items-center justify-between lg:justify-center gap-3 mb-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-purple-700 rounded-lg flex items-center justify-center" style={{  marginTop: '3rem' }}>
+              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-purple-500 to-purple-700 rounded-lg flex items-center justify-center" style={{ marginTop: '3rem', marginLeft: '20px' }}>
                 <BarChart3 className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
               </div>
               <h1 className="text-1 lg:text-sm font-bold text-white" style={{ fontSize: '1.25rem', marginTop: '3rem' }}>O R B I T</h1>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden text-gray-400 hover:text-white"
+              className="lg:hidden text-gray-00 hover:text-white" id='close-button'
             >
               <X className="w-6 h-6" />
             </button>
@@ -203,17 +203,16 @@ const JobTracker = () => {
             ].map(item => {
               const Icon = item.icon;
               return (
-                <button
+                <button id='sidebaritems'
                   key={item.id}
                   onClick={() => {
                     setActiveView(item.id);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all text-sm lg:text-base ${
-                    activeView === item.id
-                      ? 'bg-purple-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
-                  }`}
+                  className=  {`w-full flex items-center gap-3 p-3 transition-all text-sm lg:text-base ${activeView === item.id
+                    ? 'bg-purple-600 text-purple-500 '
+                    : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
+                    }`}
                 >
                   <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
                   {item.label}
@@ -227,11 +226,11 @@ const JobTracker = () => {
         <div className="flex-1 w-full min-h-screen-without-nav">
           {/* Mobile Header */}
           <div className="sticky top-0 z-40 lg:hidden glass-effect border-b border-purple-500/20 safe-bottom">
-            <div className="flex items-center justify-between max-w-7xl mx-auto">
+            <div className="flex items-center h-20 justify-between max-w-7xl mx-auto bg-gray-900 from-purple-900/50 to-black-900/50">
               <button
                 onClick={() => setSidebarOpen(true)}
                 className="p-2 rounded-lg bg-gray-700/50 text-white hover:bg-gray-700 transition-colors duration-200"
-              >
+              id='toggle-button'>
                 <Menu className="w-5 h-5" />
               </button>
               <h2 className="text-base sm:text-lg font-semibold text-white">
@@ -240,7 +239,7 @@ const JobTracker = () => {
               <button
                 onClick={() => setShowAddModal(true)}
                 className="p-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700"
-              >
+              id='add-application-button'>
                 <PlusCircle className="w-5 h-5" />
               </button>
             </div>
@@ -362,33 +361,65 @@ const JobTracker = () => {
               </div>
             )}
 
+
+
+
+
+
             {/* Applications View */}
             {activeView === 'applications' && (
-              <div className="space-y-4 sm:space-y-6">
-                {/* Improved search and filter layout */}
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <div className="flex-1 relative">
-                    <Search className="w-4 h-4 lg:w-5 lg:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Search applications..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 lg:py-3 bg-gray-800/50 border border-purple-500/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 text-sm lg:text-base"
-                    />
+              <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-9 xl:grid-cols-4 2xl:grid-cols-4 
+                  gap-3 sm:gap-4 lg:gap-5 xl:gap-6">
+                {/* Search and Filter Section */}
+                <div className="mb-4 sm:mb-6 lg:mb-8">
+                  <div className="flex flex-col xs:flex-col sm:flex-row gap-3 sm:gap-4">
+                    {/* Search Input */}
+                    <div className="flex-1 relative">
+                      <Search className="w-4 h-4 sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
+                      <input
+                        type="text"
+                        placeholder="Search applications..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 lg:py-3.5 
+                     bg-gray-800/50 border border-purple-500/20 rounded-lg 
+                     text-white placeholder-gray-400 
+                     focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/30
+                     text-sm sm:text-base
+                     transition-all duration-200"
+                      />
+                    </div>
+
+
+                    {/* Filter Dropdown */}
+                    <div className="w-full sm:w-auto sm:min-w-[140px] lg:min-w-[160px]">
+                      <select
+                        value={filterStatus}
+                        onChange={(e) => setFilterStatus(e.target.value)}
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 lg:py-3.5 
+                     bg-gray-800/50 border border-purple-500/20 rounded-lg 
+                     text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/30
+                     text-sm sm:text-base
+                     transition-all duration-200
+                     cursor-pointer"
+                      >
+                        <option value="all">All Status</option>
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="offer">Offer</option>
+                        <option value="rejected">Rejected</option>
+                      </select>
+                    </div>
                   </div>
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-4 py-2 lg:py-3 bg-gray-800/50 border border-purple-500/20 rounded-lg text-white focus:outline-none focus:border-purple-500 text-sm lg:text-base"
-                  >
-                    <option value="all">All Status</option>
-                    <option value="applied">Applied</option>
-                    <option value="interview">Interview</option>
-                    <option value="offer">Offer</option>
-                    <option value="rejected">Rejected</option>
-                  </select>
                 </div>
+
+
+
+
+
+
+
+
 
                 {/* Fluid Applications Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
@@ -457,67 +488,91 @@ const JobTracker = () => {
               </div>
             )}
 
-            {/* Enhanced Analytics View */}
-            {activeView === 'analytics' && (
-              <div className="space-y-4 sm:space-y-6">
-                {/* Responsive analytics grid */}
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
-                  <div className="bg-gray-800/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-3 sm:p-4 lg:p-6">
-                    <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-white mb-4">Application Trends</h3>
-                    <div className="h-[250px] sm:h-[300px] lg:h-[350px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={getChartData()}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                          <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-                          <YAxis stroke="#9CA3AF" fontSize={12} />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: '#1F2937',
-                              border: '1px solid #8B5CF6',
-                              borderRadius: '8px',
-                              color: '#fff',
-                              fontSize: '14px'
-                            }}
-                          />
-                          <Bar dataKey="applications" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
+           {/* Enhanced Analytics View */}
+{activeView === 'analytics' && (
+  <div className="space-y-4 sm:space-y-6" >
+    {/* Responsive analytics grid */}
+    <div className="
+      grid 
+  grid-cols-1 
+  sm:grid-cols-1 
+  xl:grid-cols-2 
+  2xl:grid-cols-2
+  gap-10 sm:gap-3 
+  w-full max-w-screen-2xl mx-auto px-30
+    ">
+      {/* Application Trends */}
+      <div className="w-[300%] bg-gray-800/40 backdrop-blur-sm border border-purple-500/20 rounded-lg 
+  p-3 sm:p-4 lg:p-6 
+  w-[90%] max-w-md mr-auto" id='analytics'>
 
-                  <div className="bg-gray-800/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-3 sm:p-4 lg:p-6">
-                    <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-white mb-4">Success Rate</h3>
-                    <div className="space-y-6">
-                      <div className="text-center">
-                        <div className="text-3xl lg:text-4xl font-bold text-white mb-2">
-                          {stats.total > 0 ? Math.round((stats.offers / stats.total) * 100) : 0}%
-                        </div>
-                        <p className="text-gray-400">Offer Rate</p>
-                      </div>
-                      <div className="space-y-4">
-                        {[
-                          { label: 'Interview Rate', value: stats.total > 0 ? Math.round(((stats.interviews + stats.offers) / stats.total) * 100) : 0, color: 'bg-yellow-500' },
-                          { label: 'Rejection Rate', value: stats.total > 0 ? Math.round((stats.rejected / stats.total) * 100) : 0, color: 'bg-red-500' }
-                        ].map((metric, index) => (
-                          <div key={index}>
-                            <div className="flex justify-between text-sm text-gray-300 mb-1">
-                              <span>{metric.label}</span>
-                              <span>{metric.value}%</span>
-                            </div>
-                            <div className="w-full bg-gray-700 rounded-full h-2">
-                              <div
-                                className={`${metric.color} h-2 rounded-full transition-all duration-500`}
-                                style={{ width: `${metric.value}%` }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+
+
+        <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-white mb-2">
+          Application Trends
+        </h3>
+        <div className="h-[250px] sm:h-[300px] lg:h-[350px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={getChartData()}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#1F2937',
+                  border: '1px solid #8B5CF6',
+                  borderRadius: '8px',
+                  color: '#fff',
+                  fontSize: '14px'
+                }}
+              />
+              <Bar dataKey="applications" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Success Rate */}
+      <div className="w-[300%] bg-gray-800/40 backdrop-blur-sm border border-purple-500/20 rounded-lg 
+  p-3 sm:p-4 lg:p-6 
+  w-[90%] max-w-md mr-2" id='success-rate' style={{ marginLeft: '-100px' }}>
+        <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-white mb-4">
+          Success Rate
+        </h3>
+        <div className="space-y-6">
+          <div className="text-center">
+            <div className="text-3xl lg:text-4xl font-bold text-white mb-2">
+              {stats.total > 0 ? Math.round((stats.offers / stats.total) * 100) : 0}%
+            </div>
+            <p className="text-gray-400">Offer Rate</p>
+          </div>
+          <div className="space-y-4">
+            {[
+              { label: 'Interview Rate', value: stats.total > 0 ? Math.round(((stats.interviews + stats.offers) / stats.total) * 100) : 0, color: 'bg-yellow-500' },
+              { label: 'Rejection Rate', value: stats.total > 0 ? Math.round((stats.rejected / stats.total) * 100) : 0, color: 'bg-red-500' }
+            ].map((metric, index) => (
+              <div key={index}>
+                <div className="flex justify-between text-sm text-gray-300 mb-1">
+                  <span>{metric.label}</span>
+                  <span>{metric.value}%</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div
+                    className={`${metric.color} h-2 rounded-full transition-all duration-500`}
+                    style={{ width: `${metric.value}%` }}
+                  />
                 </div>
               </div>
-            )}
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
+          
           </div>
         </div>
       </div>
